@@ -114,7 +114,12 @@ async def realizar_busca(termo_busca):
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(
-            headless=True, args=["--disable-blink-features=AutomationControlled"]
+            headless=True,
+            args=[
+                "--no-sandbox",
+                "--disable-dev-shm-usage",
+                "--disable-blink-features=AutomationControlled",
+            ],
         )
 
         context = await browser.new_context(
