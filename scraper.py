@@ -90,7 +90,7 @@ async def realizar_busca(termo_busca):
 
                     detalhes.append(registro)
 
-            botao_next = page.locator(".paginate_button.next")
+            botao_next = page.locator(".paginate_button.next").first
 
             if await botao_next.count() == 0:
                 break
