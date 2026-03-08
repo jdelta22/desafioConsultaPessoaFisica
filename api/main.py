@@ -1,11 +1,15 @@
 import uuid
 from datetime import datetime
 
+import pytz
 from fastapi import FastAPI
 
 from scraper import realizar_busca
 
 app = FastAPI()
+
+
+br_timezone = pytz.timezone("America/Sao_Paulo")
 
 
 def gerar_id_consulta():
@@ -22,14 +26,22 @@ async def consulta(termo: str):
     if not resultados:
         if termo.isdigit():
             return {
-                "message": "Não foi possível retornar os dados no tempo de resposta solicitado."
+                "consulta_id": consulta_id,
+                "termo_busca": termo,
+                "data_consulta": datetime.now(br_timezone).isoformat(),
+                "message": "Não foi possível retornar os dados no tempo de resposta solicitado.",
             }
         else:
-            return {"message": "Foram encontrados 0 resultados para o termo …"}
+            return {
+                "consulta_id": consulta_id,
+                "termo_busca": termo,
+                "data_consulta": datetime.now(br_timezone).isoformat(),
+                "message": "Foram encontrados 0 resultados para o termo …",
+            }
 
     return {
         "consulta_id": consulta_id,
         "termo_busca": termo,
-        "data_consulta": datetime.now().isoformat(),
+        "data_consulta": datetime.now(br_timezone).isoformat(),
         "resultados": resultados,
     }
