@@ -2,15 +2,10 @@ import uuid
 from datetime import datetime
 
 from fastapi import FastAPI
-from pydantic import BaseModel
 
 from scraper import realizar_busca
 
 app = FastAPI()
-
-
-class ConsultaRequest(BaseModel):
-    termo: str
 
 
 def gerar_id_consulta():
@@ -19,14 +14,13 @@ def gerar_id_consulta():
     return f"{uid}_{timestamp}"
 
 
-@app.post("/consulta/{termo_busca}")
-async def api_buscar_detalhes_pessoa_fisica(termo_busca: str):
+@app.get("/consulta/{termo}")
+async def consulta(termo: str):
 
     consulta_id = gerar_id_consulta()
-    resultados = await realizar_busca(termo_busca)
-
+    resultados = await realizar_busca(termo)
     if not resultados:
-        if termo_busca.isdigit():
+        if termo.isdigit():
             return {
                 "message": "Não foi possível retornar os dados no tempo de resposta solicitado."
             }
@@ -35,7 +29,7 @@ async def api_buscar_detalhes_pessoa_fisica(termo_busca: str):
 
     return {
         "consulta_id": consulta_id,
-        "termo_busca": termo_busca,
+        "termo_busca": termo,
         "data_consulta": datetime.now().isoformat(),
         "resultados": resultados,
     }
