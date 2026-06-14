@@ -1,6 +1,6 @@
 # Consulta Pessoa Física API
 
-API REST desenvolvida com Python, Django e Django REST Framework para consulta de dados de pessoas físicas por CPF através da integração com um serviço externo.
+API REST desenvolvida com **Python** e **FastAPI** para consulta de dados de pessoas físicas por CPF através da integração com um serviço externo.
 
 ## Funcionalidades
 
@@ -8,15 +8,16 @@ API REST desenvolvida com Python, Django e Django REST Framework para consulta d
 - Validação de parâmetros de entrada.
 - Tratamento de erros e respostas padronizadas.
 - Integração com API externa.
-- Documentação automática via Swagger/OpenAPI.
+- Documentação automática via OpenAPI/Swagger.
 
 ## Tecnologias Utilizadas
 
 - Python
-- Django
-- Django REST Framework
-- drf-spectacular
-- SQLite
+- FastAPI
+- Playrigwht
+- Uvicorn
+- Pydantic
+- Requests
 
 ## Instalação
 
@@ -45,24 +46,32 @@ Instale as dependências:
 pip install -r requirements.txt
 ```
 
-Execute as migrações:
-
-```bash
-python manage.py migrate
-```
+## Executando a Aplicação
 
 Inicie o servidor:
 
 ```bash
-python manage.py runserver
+uvicorn main:app --reload
+```
+
+A API estará disponível em:
+
+```text
+http://localhost:8000
 ```
 
 ## Documentação da API
 
-Após iniciar a aplicação, a documentação estará disponível em:
+Documentação interativa Swagger:
 
 ```text
-/api/docs/
+/docs
+```
+
+Documentação ReDoc:
+
+```text
+/redoc
 ```
 
 ## Exemplo de Requisição
@@ -73,24 +82,25 @@ Após iniciar a aplicação, a documentação estará disponível em:
 GET /consulta/?cpf=12345678900
 ```
 
-### Exemplo de Resposta
-
-```json
-{
-  "nome": "João da Silva",
-  "cpf": "12345678900",
-  "situacao": "Regular"
-}
-```
-
 ## Conceitos Praticados
 
-- Desenvolvimento de APIs REST com Django REST Framework
+- Desenvolvimento de APIs REST com FastAPI
+- Validação de dados com Pydantic
 - Consumo de APIs externas
-- Serializers e validações
 - Tratamento de exceções
-- Documentação com OpenAPI/Swagger
-- Organização de projetos Django
+- Documentação automática com OpenAPI
+- Organização de projetos Python
+
+## Estrutura do Projeto
+
+```text
+.
+├── api/
+│   └── main.py
+├── scrapper.py
+├── requirements.txt
+└── README.md
+```
 
 ## Autor
 
